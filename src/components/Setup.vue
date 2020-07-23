@@ -1,14 +1,11 @@
 //测试Setup函数的组件
 <template>
   <div>
-      <p>Edit <code>把code里边的东西修改了之后,不用保存,就是热替代</code> to test hot module replacement.</p>
       <span>ref数字:{{num}}</span>
-      <p>props数字:{{value}}</p>
-      <span>ref对象:{{arr}}</span>
+      <p>ref对象:{{arr}}</p>
+      <span>props数字:{{value}}</span>
       <p>props对象{{set}}</p>
       <button @click="changeRef">changeRef数据</button>
-      <button @click="changeProps">changeProps数据</button>
-      <div :class="{done:num==3}"></div>
   </div>
 </template>
 <script>
@@ -26,27 +23,29 @@ export default {
         }
     },
     setup(props,content){
-        // console.log(content);
-        const num = ref(0);
-        const arr = reactive({ n:999 })
+        /**
+         * setup接收两个参数,第一个是用的最多的props,第二是ctx上下文,不过是精简版,只提供了三个属性attrs,slots,emit,这三个都是写组件必不可少的
+         * emit: 同父组件通信
+         * slots: 插槽分发内容
+         * attrs: 可以用于封装高阶组件, 配合v-bind进行属性透传
+        */
+        console.log("props:",props)
+        console.log("ctx上下文",content)
+        const num = ref(0) //ref像是一个盒子,将0包裹成一个对象,具有value属性 (被包裹的可以是简单类型或者引用类型)
+        const arr = reactive({ n:1000 }) //reactive是对象{ n:1000 }的代理,即修改的的话只需要修改arr,不用修改原对象
         function changeRef(){
-            this.num += 1;
-            this.arr.n += 1; 
-            //自处可以打印一下this,看下this的格式
-            console.log(this);
+            num.value += 1 //修改对象(引用类型)要修改他的value属性
+            arr.n += 1 // reactive不会生成value, arr.n.value += 1的话会报error
         }
-        function changeProps(){
-            /**
-             * 这块还没有搞完，主要是想知道props和content的作用的
-            */
-        }
-        //如果没有return的话是没有值的
+        //返回:无论是state还是function都需要返回,render函数进行调用
         return{
             num,
             arr,
-            changeRef,
-            changeProps
+            changeRef
         }
+    },
+    beforeCreate(){
+        console.log("setup在createBefore之前被调用")
     }
 }
 </script>

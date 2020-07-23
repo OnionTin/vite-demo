@@ -1,7 +1,7 @@
 //一个TodoList组件,体验composition-api 
 <template>
     <div>
-        <div>TodoList</div>
+        <p>待办事项列表</p>
         <input type="text" v-model="newTodo" @keyup.enter="addTodo">
         <ul>
             <li :class="{done: todo.complate}" v-for="(todo,index) in todos" :key="todo.id" @click="toogle(index)">{{todo.value}}</li>
@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-import { ref, toRefs, reactive, computed, isProxy } from "vue"
+import { ref, toRefs, reactive, computed } from "vue"
 import useAddTodo from "../js/todo"
 export default {
     setup(){
@@ -23,7 +23,6 @@ export default {
             ]
         })
         /**
-         *   compposition-api最牛逼的地方:
          *   可以拆包,类似于之前的mixins,但是mixins的缺点就是找不到源头
         */
         const { addTodo } = useAddTodo(state)
@@ -51,8 +50,13 @@ export default {
 }
 </script>>
 <style scoped>
+li{
+    list-style:none;
+}
 li.done{
     text-decoration: line-through;
     font-weight: 600;
+    list-style: decimal;
+    list-style-position: inside;
 }
 </style>

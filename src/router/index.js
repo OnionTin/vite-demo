@@ -1,8 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from '../views/Home.vue'
-import TodoList from '../views/TodoList.vue'
 import Setup from '../views/Setup.vue'
+import TodoList from '../views/TodoList.vue'
+import UseScroll from '../views/UseScroll.vue'
 const router = createRouter({
     history: createWebHashHistory(), //哈希模式
     // history: createWebHistory(process.env.BASE_URL), //history模式
@@ -15,17 +16,24 @@ const router = createRouter({
             }
         },
         {
-            path:"/TodoList",
-            component:TodoList,
-            meta:{
-                title:"TodoList"
-            }
-        },
-        {
             path:"/Setup",
             component:Setup,
             meta:{
                 title:"Setup函数"
+            }
+        },
+        {
+            path:"/TodoList",
+            component:TodoList,
+            meta:{
+                title:"Composition-api拆包配合ref等api"
+            }
+        },
+        {
+            path:"/UseScroll",
+            component:UseScroll,
+            meta:{
+                title:"Composition-api拆包配合生命周期函数"
             }
         }
     ]

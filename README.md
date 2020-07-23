@@ -1,6 +1,6 @@
 # vite-demo
 
-> vite+vue-next
+> vue-next + vite 学习路程
 
 ## Build Setup
 
